@@ -1,0 +1,5 @@
+schema: https://pubgrecords-graphql.herokuapp.com/api/graphql
+generates:
+  ./src/types.d.ts:
+    plugins:
+      - typescript
