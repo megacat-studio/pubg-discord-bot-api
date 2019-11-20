@@ -3,50 +3,67 @@
   "private": true,
   "version": "0.0.1",
   "description": "A discord bot to view stats and overview from PUBG",
+  "homepage": "https://github.com/megacat-studio/pubg-discord-bot-api#readme",
+  "author": "megacat-studio",
+  "license": "MIT",
+  "keywords": [
+    "webpack",
+    "graphql",
+    "typescript",
+    "apollo",
+    "apollo-server"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megacat-studio/pubg-discord-bot-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/megacat-studio/pubg-discord-bot-api/issues"
+  },
   "main": "main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "build": "webpack --config webpack.$NODE_ENV.js",
+    "generate": "gql-gen",
+    "generate:watch": "nodemon --exec yarn generate -e graphql",
+    "build": "yarn generate && webpack --config webpack.$NODE_ENV.js",
     "build:prod": "NODE_ENV=production yarn build",
     "build:dev": "NODE_ENV=development yarn build",
-    "start": "node dist/server",
-    "start:env": "node --require dotenv/config dist/server",
+    "start": "npm-run-all --serial build start:server",
+    "start:server": "node ./dist/server",
+    "start:server:env": "node --require dotenv/config dist/server",
+    "start:server:watch": "nodemon --exec yarn start:server:env -e ts",
+    "dev": "yarn build:prod && yarn start:server:env",
     "watch": "tsc -p tsconfig.json -w",
-    "test": "mocha -r ts-node/register \"tests/**/*.spec.ts\"",
-    "generate": "graphql-codegen",
+    "test": "echo \"Error: no tests installed\" && exit 1",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
-    "clean": "rm -rf dist/"
+    "clean": "rm -rf dist/ && rm -rf node_modules/"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/megacat-studio/pubg-discord-bot.git"
-  },
-  "keywords": [
-    "mocha",
-    "typescript",
-    "heroku",
-    "discord.js"
-  ],
-  "author": "megacat-studio",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/megacat-studio/pubg-discord-bot/issues"
-  },
-  "homepage": "https://github.com/megacat-studio/pubg-discord-bot#readme",
   "dependencies": {
-    "apollo-server": "^2.9.7",
+    "@graphql-modules/core": "0.7.13",
+    "apollo-server": "^2.9.9",
     "graphql": "^14.5.8",
+    "graphql-toolkit": "0.7.2",
+    "graphql-tools": "4.0.6",
     "reflect-metadata": "^0.1.13",
     "tslint": "^5.20.1",
     "tslint-config-airbnb": "^5.11.2"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.8.3",
-    "@graphql-codegen/typescript": "^1.8.3",
+    "@graphql-codegen/add": "1.8.3",
+    "@graphql-codegen/cli": "1.8.3",
+    "@graphql-codegen/typescript": "1.8.3",
+    "@graphql-codegen/typescript-resolvers": "1.8.3",
+    "@types/lodash": "4.14.149",
     "@types/webpack-env": "^1.14.1",
+    "apollo-datasource-rest": "0.6.6",
     "clean-webpack-plugin": "^3.0.0",
     "dotenv": "^8.2.0",
+    "graphql-tag-pluck": "0.8.7",
+    "lodash": "4.17.15",
+    "nodemon": "2.0.0",
     "ts-loader": "^6.2.1",
+    "ts-node": "8.5.2",
+    "tsconfig-paths": "3.9.0",
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",

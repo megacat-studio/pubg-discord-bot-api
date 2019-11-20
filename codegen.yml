@@ -1,5 +1,12 @@
 schema: https://pubgrecords-graphql.herokuapp.com/api/graphql
+require:
+  - ts-node/register/transpile-only
+  - tsconfig-paths/register
 generates:
-  ./src/types.d.ts:
+  ./src/generated-models.ts:
     plugins:
+      - add: /* tslint:ignore */
       - typescript
+      - typescript-resolvers
+    config:
+      contextType: '@graphql-modules/core#ModuleContext'
