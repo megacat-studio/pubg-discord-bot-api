@@ -51,6 +51,9 @@
     "tslint": "^5.20.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
+    "clean-webpack-plugin": "^3.0.0",
+    "webpack-merge": "^4.2.2",
+    "webpack-node-externals": "^1.7.2",
     "tslint-config-airbnb": "^5.11.2",
     "typescript": "^3.7.2"
   },
