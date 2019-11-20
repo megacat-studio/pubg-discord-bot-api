@@ -1,7 +1,7 @@
 require('dotenv').config({ path: '.env' });
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
-import { resolvers, typeDefs } from './schema/index';
+import { resolvers, typeDefs } from './schema/main';
 import { PubgAPI } from './endpoints/main';
 import cors from 'cors';
 

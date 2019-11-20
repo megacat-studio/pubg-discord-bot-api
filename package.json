@@ -28,7 +28,7 @@
     "build": "yarn generate && webpack --config webpack.$NODE_ENV.js",
     "build:prod": "NODE_ENV=production yarn build",
     "build:dev": "NODE_ENV=development yarn build",
-    "start": "npm-run-all --serial build start:server",
+    "start": "yarn build:prod && yarn start:server",
     "start:server": "node ./dist/server",
     "start:server:env": "node --require dotenv/config dist/server",
     "start:server:watch": "nodemon --exec yarn start:server:env -e ts",
@@ -37,6 +37,9 @@
     "test": "echo \"Error: no tests installed\" && exit 1",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
     "clean": "rm -rf dist/ && rm -rf node_modules/"
+  },
+  "engines": {
+    "yarn": "1.19.1"
   },
   "dependencies": {
     "@graphql-modules/core": "0.7.13",
