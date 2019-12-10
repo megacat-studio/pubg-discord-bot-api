@@ -16,7 +16,7 @@ Run the dev server
 yarn dev
 ```
 
-Go to http://localhost:3001/
+Go to http://localhost:5001/
 
 ## Test using the GraphQL interface
 
