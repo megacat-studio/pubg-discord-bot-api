@@ -103,7 +103,7 @@ function lifetimestats(gamestats: PubgAPIGameStats): GameStats {
     boosts: gamestats.boosts,
     downedButNotKilled: gamestats.dBNOs,
     dailyKills: gamestats.dailyKills,
-    damageDealt: gamestats.damageDealt,
+    damageDealt: gamestats.damageDealt ? Number(gamestats.damageDealt.toFixed(2)) : 0,
     days: gamestats.days, 
     headshotKills: gamestats.headshotKills,
     heals: gamestats.heals,
