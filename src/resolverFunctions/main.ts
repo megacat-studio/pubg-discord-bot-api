@@ -1,6 +1,7 @@
 import getPlayerId from './playerId';
-import getPlayerGames from './playerGames';
+import getPlayerMatches from './playerMatches';
 import getMatchInfo from './matchInfo';
+import getSeasons from './seasons';
 import getSeasonStats from './seasonStats';
 import getLeaderboards from './leaderboards';
 import getCoordinates from './telemetry';
@@ -8,8 +9,9 @@ import getLifetimeStats from './lifetimeStats';
 import getWeaponMastery from './weaponMastery';
 
 export { getPlayerId };
-export { getPlayerGames };
+export { getPlayerMatches };
 export { getMatchInfo };
+export { getSeasons };
 export { getSeasonStats };
 export { getLeaderboards };
 export { getCoordinates };

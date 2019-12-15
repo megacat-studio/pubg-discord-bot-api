@@ -1,7 +1,8 @@
 import {
   getPlayerId,
-  getPlayerGames,
+  getPlayerMatches,
   getMatchInfo,
+  getSeasons,
   getSeasonStats,
   getLeaderboards,
   getCoordinates,
@@ -13,6 +14,7 @@ interface PlayerInformation {
   region: string;
   playerName: string;
   playerId: string;
+  gameMode: string
 }
 
 interface MatchInformation {
@@ -46,7 +48,7 @@ const resolvers = {
       { region, playerName }: PlayerInformation,
       { dataSources }
     ) => {
-      const information = await dataSources.pubgAPI.getPlayerGames(
+      const information = await dataSources.pubgAPI.getPlayerMatches(
         region,
         playerName
       );
@@ -54,17 +56,17 @@ const resolvers = {
       return getPlayerId(information);
     },
 
-    playerGames: async (
+    playerMatch: async (
       root: any,
       { region, playerName }: PlayerInformation,
       { dataSources }
     ) => {
-      const information = await dataSources.pubgAPI.getPlayerGames(
+      const information = await dataSources.pubgAPI.getPlayerMatches(
         region,
         playerName
       );
 
-      return getPlayerGames(information);
+      return getPlayerMatches(information);
     },
 
     matchInfo: async (
@@ -77,8 +79,6 @@ const resolvers = {
       );
 
       return getMatchInfo(information, playerId);
-
-      //getMatchInfo(dataSources, region, matchId, playerId);
     },
 
     matchesInfo: (
@@ -94,12 +94,21 @@ const resolvers = {
       });
     },
 
+    getSeasons: async (
+      root: any,
+      { region, playerId, season }: SeasonInformation,
+      { dataSources }
+    ) => {
+      const information = await dataSources.pubgAPI.getSeasons(region);
+      return getSeasons(information);
+    },
+
     getSeasonStats: async (
       root: any,
       { region, playerId, season }: SeasonInformation,
       { dataSources }
     ) => {
-      const information = await dataSources.pubgAPI.getSeason(
+      const information = await dataSources.pubgAPI.getSeasonStats(
         region,
         playerId,
         season
@@ -110,14 +119,15 @@ const resolvers = {
 
     getLifetimeStats: async (
       root: any,
-      { region, playerId }: PlayerInformation,
+      { region, playerId, gameMode }: PlayerInformation,
       { dataSources }
     ) => {
-      const information = await dataSources.pubgAPI.getLifetimeStats(
+      const information = JSON.parse(await dataSources.pubgAPI.getLifetimeStats(
         region,
-        playerId
-      );
-      return getLifetimeStats(information);
+        playerId,
+        gameMode
+      ));
+      return getLifetimeStats(information, gameMode);
     },
 
     weaponMastery: async (

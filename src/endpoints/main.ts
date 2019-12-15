@@ -12,8 +12,8 @@ export class PubgAPI extends RESTDataSource {
     request.headers.set('Accept', 'application/vnd.api+json');
   }
 
-  async getPlayerGames(region: string, playerName: string) {
-    console.log('getting PlayerGames');
+  async getPlayerMatches(region: string, playerName: string) {
+    console.log('getting getPlayerMatches');
 
     return this.get(
       `/shards/${region}/players?filter[playerNames]=${playerName}`
@@ -25,14 +25,24 @@ export class PubgAPI extends RESTDataSource {
     return this.get(`/shards/${region}/matches/${matchId}`);
   }
 
-  async getSeason(region: string, playerId: string, season: string) {
+  async getSeasonStats(region: string, playerId: string, season: string) {
     console.log('getting season');
     return this.get(`/shards/${region}/players/${playerId}/seasons/${season}`);
   }
 
-  async getLifetimeStats(region: string, playerId: string) {
+  async getSeasons(region: string) {
+    console.log('getting season list');
+    return this.get(`/shards/${region}/seasons`)
+  }
+
+  /*async getLifetimeStats(region: string, playerId: string) {
     console.log('getting lifetime stats');
     return this.get(`/shards/${region}/players/${playerId}/seasons/lifetime`);
+  }*/
+
+  async getLifetimeStats(region: string, playerId: string, gameMode: string) {
+    console.log('getting lifetime stats');
+    return this.get(`/shards/${region}/seasons/lifetime/gameMode/${gameMode}/players?filter[playerIds]=${playerId}`);
   }
 
   async getWeaponMastery(region: string, playerId: string) {

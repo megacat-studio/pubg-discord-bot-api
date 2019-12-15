@@ -32,8 +32,8 @@ query playerId {
   playerId(region: "steam", playerName: "Kalosar")
 }
 
-query playerGame {
-  playerGames(region: "steam", playerName: "Kalosar") {
+query playerMatch {
+  playerMatch(region: "steam", playerName: "Kalosar") {
     id
     type
   }
@@ -59,30 +59,41 @@ query lifeTimeStats {
   getLifetimeStats(
     region: "steam"
     playerId: "account.6d9bb5a4a9a446058c480b2f439a8af5"
+    gameMode: "squad-fpp"
   ) {
-    assists
+   assists
+    boosts
+    downedButNotKilled
+    dailyKills
+    damageDealt
+    days
+    headshotKills
     heals
     kills
-    dBNOs
-    deaths
-    damage
-    headshotKills
     longestKill
-    longestGame
+    longestTimeSurvived
+    deaths
+    maxKillStreaks
+    mostSurvivalTime
+    rankPoints
+    rankPointsTitle
     revives
+    drivingDistance
     roadKills
     roundMostKills
-    rounds
+    roundsPlayed
     suicides
-    runningDistance
     swimDistance
-    drivingDistance
     teamKills
-    timePlayed
+    timeSurvived
     top10s
     vehiclesDestroyed
+    runningDistance
     weaponsAcquired
+    weeklyKills
+    weeklyWins
     wins
+    dailyWins
     kdRatio
   }
 }
@@ -128,6 +139,15 @@ query matchInfo {
       team
       matchId
     }
+  }
+}
+
+query seasons {
+  getSeasons(region: "steam") {
+     type
+    	id
+    	isCurrentSeason
+    	isOffseason 
   }
 }
 

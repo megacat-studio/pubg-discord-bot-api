@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express';
 import { DocumentNode } from 'graphql';
 
 export default gql`
-  type PlayerGame {
+  type PlayerMatch {
     id: String
     type: String
   }
@@ -45,6 +45,12 @@ export default gql`
     vehiclesDestroyed: Int
     walkDistance: Float
   }
+  type Season {
+    type: String
+    id: String
+    isCurrentSeason: Boolean
+    isOffseason: Boolean
+  }
   type SeasonStats {
     assists: Int
     heals: Int
@@ -73,27 +79,37 @@ export default gql`
   }
   type LifetimeStats {
     assists: Int
+    boosts: Int
+    downedButNotKilled: Int
+    dailyKills: Int
+    damageDealt: Float
+    days: Int
+    dailyWins: Int
+    headshotKills: Int
     heals: Int
     kills: Int
-    dBNOs: Int
-    deaths: Int
-    damage: Float
-    headshotKills: Int
     longestKill: Float
-    longestGame: Int
+    longestTimeSurvived: Float
+    deaths: Int
+    maxKillStreaks: Int
+    mostSurvivalTime: Float
+    rankPoints: Int
+    rankPointsTitle: String
     revives: Int
+    drivingDistance: Float
     roadKills: Int
     roundMostKills: Int
-    rounds: Int
+    roundsPlayed: Int
     suicides: Int
-    runningDistance: Int
-    swimDistance: Int
-    drivingDistance: Int
+    swimDistance: Float
     teamKills: Int
-    timePlayed: Int
+    timeSurvived: Float
     top10s: Int
     vehiclesDestroyed: Int
+    runningDistance: Float
     weaponsAcquired: Int
+    weeklyKills: Int
+    weeklyWins: Int
     wins: Int
     kdRatio: Float
   }
@@ -159,7 +175,7 @@ export default gql`
     medals: [weaponMedals]
   }
   type Query {
-    playerGames(region: String!, playerName: String!): [PlayerGame]
+    playerMatch(region: String!, playerName: String!): [PlayerMatch]
     matchInfo(
       region: String!
       matchId: [String!]!
@@ -173,12 +189,13 @@ export default gql`
     playerId(region: String!, playerName: String!): ID!
     leaderboards(gameMode: String!, count: Int!): [Players!]!
     telemetry(url: String!, users: [String!], scale: Int): Telemetry
+    getSeasons(region: String!): [Season]
     getSeasonStats(
       region: String!
       playerId: String!
       season: String!
     ): SeasonStats
-    getLifetimeStats(region: String!, playerId: String!): LifetimeStats
+    getLifetimeStats(region: String!, playerId: String!, gameMode: String!): LifetimeStats
     weaponMastery(region: String!, playerId: String!): [weaponMastery]
   }
 `;

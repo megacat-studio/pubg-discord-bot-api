@@ -14,8 +14,6 @@ interface Information {
   ];
 }
 
-export default function getPlayerGames(information: Information) {
-  const matchesArray = information.data[0].relationships.matches.data;
-
-  return matchesArray;
+export default function getPlayerMatches(information: Information) {
+  return information.data[0].relationships.matches.data;
 }

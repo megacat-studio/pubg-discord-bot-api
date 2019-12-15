@@ -1,14 +1,15 @@
 import { map, values } from 'lodash';
 
 interface Information {
-  data: {
+  data: [{
     type: string;
     attributes: {
-      gameModeStats: [PubgAPIGameStats];
+      gameModeStats: [PubgAPIGameStats]
+      bestRankPoint: number;
     };
     relationships: {
-      player: any;
       season: any;
+      player: any;
       matchesSolo: any;
       matchesSoloFPP: any;
       matchesDuo: any;
@@ -16,198 +17,121 @@ interface Information {
       matchesSquad: any;
       matchesSquadFPP: any;
     };
-  };
+  }];
 }
 
 interface PubgAPIGameStats {
   assists: number;
-  heals: number;
   boosts: number;
-  kills: number;
   dBNOs: number;
-  losses: number;
+  dailyKills: number;
   damageDealt: number;
+  days: number;
   headshotKills: number;
+  heals: number;
+  kills: number;
   longestKill: number;
   longestTimeSurvived: number;
+  losses: number;
+  maxKillStreaks: number;
+  mostSurvivalTime: number;
+  rankPoints: number;
+  rankPointsTitle: String;
   revives: number;
+  rideDistance: number;
   roadKills: number;
   roundMostKills: number;
   roundsPlayed: number;
   suicides: number;
-  walkDistance: number;
   swimDistance: number;
-  rideDistance: number;
   teamKills: number;
   timeSurvived: number;
   top10s: number;
   vehicleDestroys: number;
+  walkDistance: number;
   weaponsAcquired: number;
+  weeklyKills: number;
+  weeklyWins: number;
   wins: number;
+  dailyWins: number;
 }
 
 interface GameStats {
   assists: number;
-  heals: number;
   boosts: number;
-  kills: number;
-  dBNOs: number;
-  deaths: number;
-  damage: number;
+  downedButNotKilled: number;
+  dailyKills: number;
+  damageDealt: number;
+  days: number;
   headshotKills: number;
+  heals: number;
+  kills: number;
   longestKill: number;
-  longestGame: number;
+  longestTimeSurvived: number;
+  deaths: number;
+  maxKillStreaks: number;
+  mostSurvivalTime: number;
+  rankPoints: number;
+  rankPointsTitle: String;
   revives: number;
+  drivingDistance: number;
   roadKills: number;
   roundMostKills: number;
-  rounds: number;
+  roundsPlayed: number;
   suicides: number;
-  runningDistance: number;
   swimDistance: number;
-  drivingDistance: number;
   teamKills: number;
-  timePlayed: number;
+  timeSurvived: number;
   top10s: number;
   vehiclesDestroyed: number;
+  runningDistance: number;
   weaponsAcquired: number;
+  weeklyKills: number;
+  weeklyWins: number;
   wins: number;
+  dailyWins: number;
   kdRatio: number;
 }
 
-export default function getLifetimeStats(information: Information) {
-  console.log('information;');
-  console.log(information);
-
-  const gameModeStats: GameStats[] = map(
-    information.data.attributes.gameModeStats,
-    pubgGameStats => gameStatsToPlayerStats(pubgGameStats)
-  );
-  console.log('gamestats RAW:');
-  console.log(information.data.attributes.gameModeStats);
-
-  console.log('gamestats FIXED:');
-  console.log(gameModeStats);
-  return values(gameModeStats).reduce(lifetimestats);
+export default function getLifetimeStats(information: Information, gameMode: string) {
+  return lifetimestats(information.data[0].attributes.gameModeStats[`${gameMode}`]);
 }
 
-function gameStatsToPlayerStats(gamestats: PubgAPIGameStats): GameStats {
+function lifetimestats(gamestats: PubgAPIGameStats): GameStats {
   return {
-    kills: gamestats.kills,
-    dBNOs: gamestats.dBNOs,
-    roadKills: gamestats.roadKills,
     assists: gamestats.assists,
-    deaths: gamestats.losses,
-    rounds: gamestats.roundsPlayed,
-    wins: gamestats.wins,
-    top10s: gamestats.top10s,
-    suicides: gamestats.suicides,
-    weaponsAcquired: gamestats.weaponsAcquired,
-    swimDistance: gamestats.swimDistance,
-    headshotKills: gamestats.headshotKills,
-    teamKills: gamestats.teamKills,
-    kdRatio: 0,
-    runningDistance: gamestats.walkDistance,
-    drivingDistance: gamestats.rideDistance,
-    vehiclesDestroyed: gamestats.vehicleDestroys,
-    heals: gamestats.heals,
     boosts: gamestats.boosts,
+    downedButNotKilled: gamestats.dBNOs,
+    dailyKills: gamestats.dailyKills,
+    damageDealt: gamestats.damageDealt,
+    days: gamestats.days, 
+    headshotKills: gamestats.headshotKills,
+    heals: gamestats.heals,
+    kills: gamestats.kills,
+    longestKill: gamestats.longestKill ? Number(gamestats.longestKill.toFixed(2)) : 0,
+    longestTimeSurvived: gamestats.longestTimeSurvived ? Number(gamestats.longestTimeSurvived.toFixed(2)) : 0,
+    deaths: gamestats.losses,
+    maxKillStreaks: gamestats.maxKillStreaks,
+    mostSurvivalTime: gamestats.mostSurvivalTime ? Number(gamestats.mostSurvivalTime.toFixed(2)) : 0,
+    rankPoints: gamestats.rankPoints,
+    rankPointsTitle: gamestats.rankPointsTitle,
     revives: gamestats.revives,
-    damage: gamestats.damageDealt,
+    drivingDistance: gamestats.rideDistance ? Number(gamestats.rideDistance.toFixed(2)) : 0,
+    roadKills: gamestats.roadKills,
     roundMostKills: gamestats.roundMostKills,
-    longestKill: gamestats.longestKill,
-    timePlayed: gamestats.timeSurvived,
-    longestGame: gamestats.longestTimeSurvived
-  };
-}
-
-function lifetimestats(
-  accum: GameStats,
-  {
-    assists,
-    heals,
-    boosts,
-    kills,
-    dBNOs,
-    deaths,
-    damage,
-    headshotKills,
-    longestKill,
-    longestGame,
-    revives,
-    roadKills,
-    roundMostKills,
-    rounds,
-    suicides,
-    runningDistance,
-    swimDistance,
-    drivingDistance,
-    teamKills,
-    timePlayed,
-    top10s,
-    vehiclesDestroyed,
-    weaponsAcquired,
-    wins
-  }: GameStats,
-  index: number,
-  array: any
-): GameStats {
-  return {
-    kills: accum.kills ? accum.kills + kills : kills,
-    dBNOs: accum.dBNOs ? accum.dBNOs + dBNOs : dBNOs,
-    roadKills: accum.roadKills ? accum.roadKills + roadKills : roadKills,
-
-    assists: accum.assists ? accum.assists + assists : assists,
-    deaths: accum.deaths ? accum.deaths + deaths : deaths,
-    rounds: accum.rounds ? accum.rounds + rounds : rounds,
-    wins: accum.wins ? accum.wins + wins : wins,
-    top10s: accum.top10s ? accum.top10s + top10s : top10s,
-    suicides: accum.suicides ? accum.suicides + suicides : suicides,
-    weaponsAcquired: accum.weaponsAcquired
-      ? accum.weaponsAcquired + weaponsAcquired
-      : weaponsAcquired,
-    swimDistance: Math.round(
-      accum.swimDistance ? accum.swimDistance + swimDistance : swimDistance
-    ),
-
-    headshotKills: accum.headshotKills
-      ? accum.headshotKills + headshotKills
-      : headshotKills,
-    teamKills: accum.teamKills ? accum.teamKills + teamKills : teamKills,
-    kdRatio:
-      index === array.length - 1
-        ? Number(((accum.kills + kills) / (accum.deaths + deaths)).toFixed(2))
-        : 0,
-    runningDistance: Math.round(
-      accum.runningDistance
-        ? accum.runningDistance + runningDistance
-        : runningDistance
-    ),
-    drivingDistance: Math.round(
-      accum.drivingDistance
-        ? accum.drivingDistance + drivingDistance
-        : drivingDistance
-    ),
-    vehiclesDestroyed: accum.vehiclesDestroyed
-      ? accum.vehiclesDestroyed + vehiclesDestroyed
-      : vehiclesDestroyed,
-    heals: accum.heals ? accum.heals + heals + boosts : heals + boosts,
-    boosts: accum.boosts ? accum.boosts + boosts : boosts,
-    revives: accum.revives ? accum.revives + revives : revives,
-    damage: Number((accum.damage ? accum.damage + damage : damage).toFixed(2)),
-    roundMostKills: accum.roundMostKills
-      ? Math.max(accum.roundMostKills, roundMostKills)
-      : roundMostKills,
-    longestKill: Number(
-      (accum.longestKill
-        ? Math.max(accum.longestKill, longestKill)
-        : longestKill
-      ).toFixed(2)
-    ),
-    timePlayed: Math.round(
-      accum.timePlayed ? accum.timePlayed + timePlayed : timePlayed
-    ),
-    longestGame: Math.round(
-      accum.longestGame ? Math.max(accum.longestGame, longestGame) : longestGame
-    )
+    roundsPlayed: gamestats.roundsPlayed,
+    suicides: gamestats.suicides,
+    swimDistance: gamestats.swimDistance ? Number(gamestats.swimDistance.toFixed(2)) : 0,
+    teamKills: gamestats.teamKills,
+    timeSurvived: gamestats.timeSurvived ? Number(gamestats.timeSurvived.toFixed(2)) : 0,
+    top10s: gamestats.top10s,
+    vehiclesDestroyed: gamestats.vehicleDestroys,
+    runningDistance: gamestats.walkDistance ? Number(gamestats.walkDistance.toFixed(2)) : 0,
+    weaponsAcquired: gamestats.weaponsAcquired,
+    weeklyKills: gamestats.weeklyKills,
+    weeklyWins: gamestats.weeklyWins,
+    wins: gamestats.wins,
+    dailyWins: gamestats.dailyWins,
+    kdRatio: gamestats.kills ? Number((gamestats.kills / gamestats.losses).toFixed(2)) : 0
   };
 }
