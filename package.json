@@ -25,7 +25,7 @@
   "scripts": {
     "generate": "gql-gen",
     "generate:watch": "nodemon --exec yarn generate -e graphql",
-    "build": "webpack --config webpack.development.js",
+    "build": "webpack --config webpack.$NODE_ENV.js",
     "build:prod": "NODE_ENV=production yarn build",
     "build:dev": "NODE_ENV=development yarn build",
     "start": "yarn build:prod && yarn start:server",
