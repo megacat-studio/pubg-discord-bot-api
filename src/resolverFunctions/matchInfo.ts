@@ -18,8 +18,6 @@ export default async function getMatchInfo(
   information: Information,
   playerId: string
 ) {
-  console.log('INFORMATION: ');
-  console.log(information);
 
   const included = information.included;
   const matchId = information.data.id;
@@ -93,9 +91,6 @@ export default async function getMatchInfo(
         }
       }
     } = participant;
-
-    console.log('participants!');
-    console.log(participant);
 
     const heals = boosts + Heals;
     const damage = Number(damageDealt.toFixed(2));

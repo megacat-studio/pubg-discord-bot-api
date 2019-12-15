@@ -49,8 +49,8 @@ interface WeaponStats {
   damage: any;
   headshots: any;
   roundMostHeadshots: any;
-  knocks: any;
-  roundMostKnocks: any;
+  severlyHurts: any;
+  roundMostSeverlyHurts: any;
   longRangeKills: any;
   longestKill: any;
   roundMostDefeats: any;
@@ -111,8 +111,8 @@ function getWeaponSummary(weapon: Weapon, key: string): WeaponMastery {
       damage: DamagePlayer.toFixed(2),
       headshots: HeadShots,
       roundMostHeadshots: MostHeadShotsInAGame,
-      knocks: Groggies,
-      roundMostKnocks: MostGroggiesInAGame,
+      severlyHurts: Groggies,
+      roundMostSeverlyHurts: MostGroggiesInAGame,
       longRangeKills: LongRangeDefeats,
       longestKill: LongestDefeat.toFixed(2),
       roundMostDefeats: MostDefeatsInAGame,

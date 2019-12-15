@@ -156,8 +156,8 @@ export default gql`
     damage: Float
     headshots: Int
     roundMostHeadshots: Int
-    knocks: Int
-    roundMostKnocks: Int
+    severlyHurts: Int
+    roundMostSeverlyHurts: Int
     longRangeKills: Int
     longestKill: Float
     roundMostDefeats: Int
