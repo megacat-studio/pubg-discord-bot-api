@@ -101,35 +101,41 @@ query lifeTimeStats {
 query matchInfo {
   matchInfo(
     region: "steam"
-    matchId: "cd6fa786-0290-4b4b-bd06-928be0fc3f58"
+    matchId: "68a98bd3-0224-4283-b461-a069cf1e9d38"
     playerId: "account.6d9bb5a4a9a446058c480b2f439a8af5"
   ) {
     playersInfo {
-      name
-      playerId
-      rank
-      kills
-      assists
-      dBNOs
-      boosts
-      heals
-      damage
-      headshotKills
-      killPlace
-      longestKill
-      revives
-      rideDistance
-      roadKills
-      swimDistance
-      teamKills
-      timeSurvived
-      vehiclesDestroyed
-      walkDistance
+      downedButNotKilled
+    	assists
+    	boosts
+    	damage
+    	deathType
+    	headshotKills
+    	heals
+    	killPlace
+    	killStreaks
+    	kills
+    	longestkill
+    	name
+    	playerId
+    	revives
+    	rideDistance
+    	roadKills
+    	swimDistance
+    	teamKills
+    	timeSurvived
+    	vehiclesDestroyed
+    	walkDistance
+    	weaponsAcquired
+    	rank
+    	team
     }
     generalInfo {
       gameMode
       time
       date
+      isCustomMatch
+    	seasonState
       matchDuration
       mapName
       teams
