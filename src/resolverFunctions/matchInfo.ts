@@ -9,9 +9,46 @@ interface Information {
       createdAt: string;
       duration: number;
       gameMode: string;
+      isCustomMatch: string;
+      seasonState: string;
       mapName: string;
     };
   };
+}
+
+interface GameInformation {
+  createdAt: string;
+  duration: number;
+  gameMode: string;
+  isCustomMatch: string;
+  seasonState: string;
+  mapName: string;
+}
+
+interface PlayerStats {
+  DBNOs: number;
+  assists: number;
+  boosts: number;
+  damageDealt: number;
+  deathType: string;
+  headshotKills: number;
+  heals: number;
+  killPlace: number;
+  killStreaks: number;
+  kills: number
+  longestkill: number;
+  name: string;
+  playerId: string;
+  revives: number
+  rideDistance: number;
+  roadKills: number;
+  swimDistance: number;
+  teamKills: number;
+  timeSurvived: number;
+  vehicleDestroys: number;
+  walkDistance: number;
+  weaponsAcquired: number;
+  winPlace: number;
 }
 
 export default async function getMatchInfo(
@@ -25,8 +62,10 @@ export default async function getMatchInfo(
     createdAt,
     duration,
     gameMode,
+    isCustomMatch,
+    seasonState,
     mapName
-  } = information.data.attributes;
+  }: GameInformation = information.data.attributes;
 
   let matchDuration: any, teams: any, participants: any, userRank: any;
   let [date, time] = createdAt.split('T');
@@ -69,64 +108,62 @@ export default async function getMatchInfo(
     const {
       attributes: {
         stats: {
-          winPlace: rank,
-          kills,
-          assists,
           DBNOs,
+          assists,
           boosts,
-          heals: Heals,
           damageDealt,
+          deathType,
           headshotKills,
+          heals,
           killPlace,
-          longestKill: longestkill,
+          killStreaks,
+          kills,
+          longestKill,
           name,
+          playerId,
           revives,
-          rideDistance: driveDistance,
+          rideDistance,
           roadKills,
-          swimDistance: swimmingDistance,
+          swimDistance,
           teamKills,
-          vehicleDestroys: vehiclesDestroyed,
-          timeSurvived: timeAlive,
-          walkDistance: walkingDistance
+          timeSurvived,
+          vehicleDestroys,
+          walkDistance,
+          weaponsAcquired,
+          winPlace
         }
       }
     } = participant;
 
-    const heals = boosts + Heals;
-    const damage = Number(damageDealt.toFixed(2));
-    const longestKill = Number(longestkill.toFixed(2));
-    const rideDistance = Number(driveDistance.toFixed(2));
-    const swimDistance = Number(swimmingDistance.toFixed(2));
-    const walkDistance = Number(walkingDistance.toFixed(2));
-    const timeSurvived = Math.round(timeAlive);
-    matchDuration = Math.round(duration);
-
     team.push(name);
-
     teams = rosters.length;
     participants = participantsList.length;
-    userRank = rank;
+    userRank = winPlace;
+
     return {
-      rank,
-      kills,
+      downedButNotKilled: DBNOs,
       assists,
-      dBNOs: DBNOs,
-      heals,
       boosts,
-      damage,
+      damage: damageDealt ? Number(damageDealt.toFixed(2)) : 0,
+      deathType,
       headshotKills,
+      heals: heals ? Number(heals.toFixed(2)) : 0,
       killPlace,
-      longestKill,
+      killStreaks,
+      kills,
+      longestkill: longestKill ? Number(longestKill.toFixed(2)) : 0,
       name,
       playerId,
       revives,
-      rideDistance,
+      driveDistance: rideDistance ? Number(rideDistance.toFixed(2)) : 0,
       roadKills,
-      swimDistance,
+      swimmingDistance: swimDistance ? Number(swimDistance.toFixed(2)) : 0,
       teamKills,
-      vehiclesDestroyed,
-      walkDistance,
-      timeSurvived,
+      timeSurvived: timeSurvived ? Number(timeSurvived.toFixed(2)) : 0,
+      vehiclesDestroyed: vehicleDestroys,
+      runningDistance: walkDistance ? Number(walkDistance.toFixed(2)) : 0,
+      weaponsAcquired,
+      rank: winPlace,
       team
     };
   });
@@ -135,9 +172,11 @@ export default async function getMatchInfo(
     playersInfo: teamStats,
     generalInfo: {
       gameMode,
+      isCustomMatch,
+      seasonState,
       time,
       date,
-      matchDuration,
+      matchDuration: duration ? Number(duration.toFixed(2)) : 0,
       mapName,
       teams,
       participants,

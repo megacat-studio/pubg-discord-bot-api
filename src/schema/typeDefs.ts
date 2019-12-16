@@ -14,6 +14,8 @@ export default gql`
     gameMode: String
     time: String
     date: String
+    isCustomMatch: String
+    seasonState: String
     matchDuration: Int
     mapName: String
     teams: Int
@@ -24,26 +26,30 @@ export default gql`
     matchId: String
   }
   type PlayerInfo {
+    downedButNotKilled: Int
+    assists: Int
+    boosts: Int
+    damage: Float
+    deathType: String
+    headshotKills: Int
+    heals: Int
+    killPlace: Int
+    killStreaks: Int
+    kills: Int
+    longestkill: Float
     name: String
     playerId: String
-    rank: Int
-    kills: Int
-    assists: Int
-    dBNOs: Int
-    boosts: Int
-    heals: Int
-    damage: Float
-    headshotKills: Int
-    killPlace: Int
-    longestKill: Float
     revives: Int
     rideDistance: Float
     roadKills: Int
     swimDistance: Float
     teamKills: Int
-    timeSurvived: Int
+    timeSurvived: Float
     vehiclesDestroyed: Int
     walkDistance: Float
+    weaponsAcquired: Int
+    rank: Int
+    team: [String]
   }
   type Season {
     type: String
