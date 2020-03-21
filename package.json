@@ -39,7 +39,7 @@
     "clean": "rm -rf dist/ && rm -rf node_modules/"
   },
   "engines": {
-    "yarn": "1.19.1"
+    "yarn": "^1.19.1"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
