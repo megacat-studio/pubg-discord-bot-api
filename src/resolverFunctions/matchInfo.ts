@@ -1,61 +1,8 @@
 import { head, partition, find, filter } from 'lodash';
 
-interface Information {
-  included: any;
-  data: {
-    type: string;
-    id: string;
-    attributes: {
-      createdAt: string;
-      duration: number;
-      gameMode: string;
-      isCustomMatch: string;
-      seasonState: string;
-      mapName: string;
-    };
-  };
-}
-
-interface GameInformation {
-  createdAt: string;
-  duration: number;
-  gameMode: string;
-  isCustomMatch: string;
-  seasonState: string;
-  mapName: string;
-}
-
-interface PlayerStats {
-  DBNOs: number;
-  assists: number;
-  boosts: number;
-  damageDealt: number;
-  deathType: string;
-  headshotKills: number;
-  heals: number;
-  killPlace: number;
-  killStreaks: number;
-  kills: number
-  longestkill: number;
-  name: string;
-  playerId: string;
-  revives: number
-  rideDistance: number;
-  roadKills: number;
-  swimDistance: number;
-  teamKills: number;
-  timeSurvived: number;
-  vehicleDestroys: number;
-  walkDistance: number;
-  weaponsAcquired: number;
-  winPlace: number;
-}
-
-export default async function getMatchInfo(
-  information: Information,
-  playerId: string
-) {
-
+export default async function getMatchInfo(information: MatchInformation, playerId: string) {
+  console.log("Information: ")
+  console.log(information)
   const included = information.included;
   const matchId = information.data.id;
   const {
@@ -65,7 +12,7 @@ export default async function getMatchInfo(
     isCustomMatch,
     seasonState,
     mapName
-  }: GameInformation = information.data.attributes;
+  }: MatchAttributes = information.data.attributes;
 
   let matchDuration: any, teams: any, participants: any, userRank: any;
   let [date, time] = createdAt.split('T');

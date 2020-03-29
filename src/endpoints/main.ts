@@ -50,9 +50,9 @@ export class PubgAPI extends RESTDataSource {
     return this.get(`/shards/${region}/players/${playerId}/weapon_mastery`);
   }
 
-  async getLeaderboards(gameMode: string) {
+  async getLeaderboards(gameMode: string, season: string) {
     console.log('getting leaderboards');
-    return this.get(`/shards/steam/leaderboards/${gameMode}?page[number]=0`);
+    return this.get(`/shards/steam/leaderboards/${season}/${gameMode}?page[number]=0`);
   }
 
   async getTelemetryData(url: string) {

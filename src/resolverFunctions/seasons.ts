@@ -1,30 +1,10 @@
 import { map } from 'lodash';
 
-interface Information {
-    data: [PUBGSeason]
-}
-
-interface PUBGSeason {
-    type: string;
-    id: string;
-    attributes: {
-        isCurrentSeason: string;
-        isOffSeason: string
-    }
-}
-
-interface Season {
-    type: String
-    id: String
-    isCurrentSeason: Boolean
-    isOffseason: Boolean
-  }
-
-export default function getSeasons(information: Information) {
+export default function getSeasons(information: SeasonInformation) {
     return information.data.map(season => seasons(season));
 }
 
-function seasons(seasons: PUBGSeason): Season {
+function seasons(seasons: PubgSeason): Season {
     return {
         type: seasons.type,
         id: seasons.id,
@@ -32,8 +12,3 @@ function seasons(seasons: PUBGSeason): Season {
         isOffseason: seasons.attributes.isOffSeason === "true"
     }
 }
-
-
-
-
-

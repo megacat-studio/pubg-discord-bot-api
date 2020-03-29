@@ -10,42 +10,11 @@ import {
   getWeaponMastery
 } from '../resolverFunctions/main';
 
-interface PlayerInformation {
-  region: string;
-  playerName: string;
-  playerId: string;
-  gameMode: string
-}
-
-interface MatchInformation {
-  region: string;
-  matchId: string;
-  matchesId: string[];
-  playerId: string;
-}
-
-interface SeasonInformation {
-  region: string;
-  playerId: string;
-  season: string;
-}
-
-interface GameModeInformation {
-  gameMode: string;
-  count: number;
-}
-
-interface TelemetryInformation {
-  url: any;
-  users: any;
-  scale: any;
-}
-
 const resolvers = {
   Query: {
     playerId: async (
       root: any,
-      { region, playerName }: PlayerInformation,
+      { region, playerName }: PlayerQuery,
       { dataSources }
     ) => {
       const information = await dataSources.pubgAPI.getPlayerMatches(
@@ -58,7 +27,7 @@ const resolvers = {
 
     playerMatch: async (
       root: any,
-      { region, playerName }: PlayerInformation,
+      { region, playerName }: PlayerQuery,
       { dataSources }
     ) => {
       const information = await dataSources.pubgAPI.getPlayerMatches(
@@ -71,7 +40,7 @@ const resolvers = {
 
     matchInfo: async (
       root: any,
-      { region, matchId, playerId }: MatchInformation,
+      { region, matchId, playerId }: MatchQuery,
       { dataSources }
     ) => {
       const information = JSON.parse(
@@ -83,7 +52,7 @@ const resolvers = {
 
     matchesInfo: (
       root: any,
-      { region, matchesId, playerId }: MatchInformation,
+      { region, matchesId, playerId }: MatchQuery,
       { dataSources }
     ) => {
       matchesId.map(async matchId => {
@@ -96,7 +65,7 @@ const resolvers = {
 
     getSeasons: async (
       root: any,
-      { region, playerId, season }: SeasonInformation,
+      { region, playerId, season }: SeasonQuery,
       { dataSources }
     ) => {
       const information = await dataSources.pubgAPI.getSeasons(region);
@@ -105,7 +74,7 @@ const resolvers = {
 
     getSeasonStats: async (
       root: any,
-      { region, playerId, season }: SeasonInformation,
+      { region, playerId, season }: SeasonQuery,
       { dataSources }
     ) => {
       const information = await dataSources.pubgAPI.getSeasonStats(
@@ -119,7 +88,7 @@ const resolvers = {
 
     getLifetimeStats: async (
       root: any,
-      { region, playerId, gameMode }: PlayerInformation,
+      { region, playerId, gameMode }: PlayerQuery,
       { dataSources }
     ) => {
       const information = JSON.parse(await dataSources.pubgAPI.getLifetimeStats(
@@ -132,7 +101,7 @@ const resolvers = {
 
     weaponMastery: async (
       root: any,
-      { region, playerId }: PlayerInformation,
+      { region, playerId }: PlayerQuery,
       { dataSources }
     ) => {
       const information = await dataSources.pubgAPI.getWeaponMastery(
@@ -144,19 +113,22 @@ const resolvers = {
 
     leaderboards: async (
       root: any,
-      { gameMode, count }: GameModeInformation,
+      { gameMode, season, count }: LeaderboardQuery,
       { dataSources }
     ) => {
-      const information = await dataSources.pubgAPI.getLeaderboards(gameMode);
+      const information = await dataSources.pubgAPI.getLeaderboards(gameMode, season);
       return getLeaderboards(information, count);
     },
 
     telemetry: async (
       root: any,
-      { url, users, scale }: TelemetryInformation,
+      { url, users, scale }: TelemetryQuery,
       { dataSources }
     ) => {
       const information = await dataSources.pubgAPI.getTelemetryData(url);
+
+      console.log("MyTelemetry:")
+      console.log(information)
 
       return getCoordinates(information, users, scale);
     }
