@@ -15,7 +15,7 @@ const server = new ApolloServer({
   playground: process.env.APOLLO_PLAYGROUND === 'true'
 });
 
-server.applyMiddleware({ app, path: '/api/graphql' });
+server.applyMiddleware({ app, path: `${process.env.PUBG_API_ENDPOINT}` });
 
 // enable CORS for cross-browser support
 app.use(function(req, res, next) {
