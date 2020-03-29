@@ -39,6 +39,6 @@ app.get('/', function(req, res) {
 });
 
 // verify server is running
-app.listen(process.env.PORT || 3002, function() {
+app.listen(process.env.GRAPHQL_PORT, function() {
   console.log(`hello at ${process.env.PORT}`);
 });
