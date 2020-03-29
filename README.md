@@ -1,4 +1,4 @@
-# pubg-discord-bot GraphQL server
+# PUBG GraphQL server
 
 ## Run locally :computer:
 

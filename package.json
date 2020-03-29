@@ -1,8 +1,8 @@
 {
-  "name": "pubg-discord-bot-api",
+  "name": "pubg-graphql-api",
   "private": true,
   "version": "0.0.1",
-  "description": "A discord bot to view stats and overview from PUBG",
+  "description": "A GraphQL API to view player, match, season and leaderboard data from PUBG API.",
   "homepage": "https://github.com/megacat-studio/pubg-discord-bot-api#readme",
   "author": "megacat-studio",
   "license": "MIT",
