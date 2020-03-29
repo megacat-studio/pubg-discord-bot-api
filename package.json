@@ -23,8 +23,6 @@
   "main": "main.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "generate": "gql-gen",
-    "generate:watch": "nodemon --exec yarn generate -e graphql",
     "build": "webpack --config webpack.$NODE_ENV.js",
     "build:prod": "NODE_ENV=production yarn build",
     "build:dev": "NODE_ENV=development yarn build",
@@ -63,10 +61,6 @@
     "tsconfig-paths": "3.9.0"
   },
   "devDependencies": {
-    "@graphql-codegen/add": "1.8.3",
-    "@graphql-codegen/cli": "1.8.3",
-    "@graphql-codegen/typescript": "1.8.3",
-    "@graphql-codegen/typescript-resolvers": "1.8.3",
     "@types/lodash": "4.14.149",
     "@types/webpack-env": "^1.14.1",
     "apollo-datasource-rest": "0.6.6",
