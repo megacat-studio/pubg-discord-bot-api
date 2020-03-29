@@ -12,7 +12,7 @@ type Query {
     getSeasonStats(region: String!, playerId: String!, season: String!): SeasonStats
     getLifetimeStats(region: String!, playerId: String!, gameMode: String!): LifetimeStats
     weaponMastery(region: String!, playerId: String!): [weaponMastery]
-  }
+}
   
 type PlayerMatch {
     id: String
