@@ -1,96 +1,14 @@
-import { map, values } from 'lodash';
+import { map } from 'lodash';
 
-interface Information {
-  data: {
-    type: string;
-    attributes: {
-      gameModeStats: [PubgAPIGameStats];
-    };
-    relationships: {
-      player: any;
-      season: any;
-      matchesSolo: any;
-      matchesSoloFPP: any;
-      matchesDuo: any;
-      matchesDuoFPP: any;
-      matchesSquad: any;
-      matchesSquadFPP: any;
-    };
-  };
-}
-
-interface PubgAPIGameStats {
-  assists: number;
-  heals: number;
-  boosts: number;
-  kills: number;
-  dBNOs: number;
-  losses: number;
-  damageDealt: number;
-  headshotKills: number;
-  longestKill: number;
-  longestTimeSurvived: number;
-  revives: number;
-  roadKills: number;
-  roundMostKills: number;
-  roundsPlayed: number;
-  suicides: number;
-  walkDistance: number;
-  swimDistance: number;
-  rideDistance: number;
-  teamKills: number;
-  timeSurvived: number;
-  top10s: number;
-  vehicleDestroys: number;
-  weaponsAcquired: number;
-  wins: number;
-}
-
-interface GameStats {
-  assists: number;
-  heals: number;
-  boosts: number;
-  kills: number;
-  dBNOs: number;
-  deaths: number;
-  damage: number;
-  headshotKills: number;
-  longestKill: number;
-  longestGame: number;
-  revives: number;
-  roadKills: number;
-  roundMostKills: number;
-  rounds: number;
-  suicides: number;
-  runningDistance: number;
-  swimDistance: number;
-  drivingDistance: number;
-  teamKills: number;
-  timePlayed: number;
-  top10s: number;
-  vehiclesDestroyed: number;
-  weaponsAcquired: number;
-  wins: number;
-  kdRatio: number;
-}
-
-export default function getSeasonStats(information: Information) {
+export default function getSeasonStats(information: SeasonGameInformation): SeasonGameStats {
   console.log('information;');
   console.log(information);
 
-  const gameModeStats: GameStats[] = map(
-    information.data.attributes.gameModeStats,
-    pubgGameStats => gameStatsToPlayerStats(pubgGameStats)
-  );
-  console.log('gamestats RAW:');
-  console.log(information.data.attributes.gameModeStats);
-
-  console.log('gamestats FIXED:');
-  console.log(gameModeStats);
-  return values(gameModeStats).reduce(seasonstats);
+  const gameModeStats = information.data.attributes.gameModeStats
+  return map(gameModeStats, pubgGameStats => gameStatsToPlayerStats(pubgGameStats)).reduce(seasonstats)
 }
 
-function gameStatsToPlayerStats(gamestats: PubgAPIGameStats): GameStats {
+function gameStatsToPlayerStats(gamestats: SeasonPubgApiGameStats): SeasonGameStats {
   return {
     kills: gamestats.kills,
     dBNOs: gamestats.dBNOs,
@@ -121,7 +39,7 @@ function gameStatsToPlayerStats(gamestats: PubgAPIGameStats): GameStats {
 }
 
 function seasonstats(
-  accum: GameStats,
+  accum: SeasonGameStats,
   {
     assists,
     heals,
@@ -147,10 +65,10 @@ function seasonstats(
     vehiclesDestroyed,
     weaponsAcquired,
     wins
-  }: GameStats,
+  }: SeasonGameStats,
   index: number,
   array: any
-): GameStats {
+): SeasonGameStats {
   return {
     kills: accum.kills ? accum.kills + kills : kills,
     dBNOs: accum.dBNOs ? accum.dBNOs + dBNOs : dBNOs,

@@ -192,16 +192,29 @@ export default gql`
       matchesId: [String!]!
       playerId: String!
     ): [MatchesInfo]
-    playerId(region: String!, playerName: String!): ID!
-    leaderboards(gameMode: String!, count: Int!): [Players!]!
-    telemetry(url: String!, users: [String!], scale: Int): Telemetry
+    playerId(
+      region: String!
+      playerName: String!): ID!
+    leaderboards(
+      gameMode: String!
+      season: String!
+      count: Int!): [Players!]!
+    telemetry(
+      url: String!
+      users: [String!]
+      scale: Int): Telemetry
     getSeasons(region: String!): [Season]
     getSeasonStats(
       region: String!
       playerId: String!
       season: String!
     ): SeasonStats
-    getLifetimeStats(region: String!, playerId: String!, gameMode: String!): LifetimeStats
-    weaponMastery(region: String!, playerId: String!): [weaponMastery]
+    getLifetimeStats(
+      region: String!
+      playerId: String!
+      gameMode: String!): LifetimeStats
+    weaponMastery(
+      region: String!
+      playerId: String!): [weaponMastery]
   }
 `;
