@@ -40,5 +40,5 @@ app.get('/', function(req, res) {
 
 // verify server is running
 app.listen(process.env.GRAPHQL_PORT, function() {
-  console.log(`hello at ${process.env.PORT}`);
+  console.log(`hello at ${process.env.GRAPHQL_PORT}`);
 });
