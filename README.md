@@ -1,10 +1,15 @@
 # PUBG GraphQL server
 
-
 ## Prerequisite
 
 * [Docker](https://www.docker.com/get-started)
 * [Docker-compose](https://docs.docker.com/compose/install/)
+
+## Run Docker-compose
+
+```bash
+docker-compose up
+```
 
 ## Run locally :computer:
 
