@@ -1,5 +1,11 @@
 # PUBG GraphQL server
 
+
+## Prerequisite
+
+* [Docker](https://www.docker.com/get-started)
+* [Docker-compose](https://docs.docker.com/compose/install/)
+
 ## Run locally :computer:
 
 Install dependencies
@@ -61,7 +67,7 @@ query lifeTimeStats {
     playerId: "account.6d9bb5a4a9a446058c480b2f439a8af5"
     gameMode: "squad-fpp"
   ) {
-   assists
+    assists
     boosts
     downedButNotKilled
     dailyKills
@@ -106,36 +112,36 @@ query matchInfo {
   ) {
     playersInfo {
       downedButNotKilled
-    	assists
-    	boosts
-    	damage
-    	deathType
-    	headshotKills
-    	heals
-    	killPlace
-    	killStreaks
-    	kills
-    	longestkill
-    	name
-    	playerId
-    	revives
-    	rideDistance
-    	roadKills
-    	swimDistance
-    	teamKills
-    	timeSurvived
-    	vehiclesDestroyed
-    	walkDistance
-    	weaponsAcquired
-    	rank
-    	team
+      assists
+      boosts
+      damage
+      deathType
+      headshotKills
+      heals
+      killPlace
+      killStreaks
+      kills
+      longestkill
+      name
+      playerId
+      revives
+      rideDistance
+      roadKills
+      swimDistance
+      teamKills
+      timeSurvived
+      vehiclesDestroyed
+      walkDistance
+      weaponsAcquired
+      rank
+      team
     }
     generalInfo {
       gameMode
       time
       date
       isCustomMatch
-    	seasonState
+      seasonState
       matchDuration
       mapName
       teams
@@ -150,10 +156,10 @@ query matchInfo {
 
 query seasons {
   getSeasons(region: "steam") {
-     type
-    	id
-    	isCurrentSeason
-    	isOffseason 
+    type
+    id
+    isCurrentSeason
+    isOffseason
   }
 }
 
