@@ -5,7 +5,7 @@
 * [Docker](https://www.docker.com/get-started)
 * [Docker-compose](https://docs.docker.com/compose/install/)
 
-## Run Docker-compose
+## Run Docker-compose 🚢 
 
 ```bash
 docker-compose up
